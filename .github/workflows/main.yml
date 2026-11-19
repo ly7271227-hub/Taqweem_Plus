@@ -1,3 +1,4 @@
+
 name: Build Flutter APK
 
 on:
@@ -11,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-24.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -38,6 +40,9 @@ jobs:
           cache: true
           channel: stable
 
+      - name: Repair Android Embedding
+        run: flutter create --platforms=android --overwrite .
+
       - name: Get dependencies
         run: flutter pub get
 
@@ -47,7 +52,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
+          name: Taqweem-Plus-APK
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 7
